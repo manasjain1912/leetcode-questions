@@ -37,7 +37,7 @@ class Solution{
                 }
                 i++;
             }
-            j++;
+           j++;
         }
     }
     return ans;
