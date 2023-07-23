@@ -1,57 +1,38 @@
 class Solution {
 public:
-    vector<int> asteroidCollision(vector<int>& arr) {
-        
-        stack<int>stk;
-        int i=0;
-        
-        while(i<arr.size())
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        stack<int>st;
+        for(auto a:asteroids)
         {
-            if(stk.size()==0)  
+            while(!st.empty() && a<0 && st.top()>0)
             {
-                stk.push(arr[i]);
-                i++;
-            } 
-            else if(stk.size()>0)
-            {
-                int currval=arr[i];
-                
-                if((stk.top()<0 and currval>0) or (stk.top()>0 and currval<0))  
+                int sum=a+st.top();
+                if(sum<0)
                 {
-                    if(stk.top()<0 and currval>0)
-                    {
-                        stk.push(arr[i]);
-                        i++;
-                        continue;
-                    }
-                    else if(abs(stk.top())>abs(currval))
-                    {
-                       i++;
-                    }
-                    else if(abs(stk.top())<abs(currval))
-                    {
-                       stk.pop(); 
-                    }
-                    else if(abs(stk.top())==abs(currval))
-                    {
-                        stk.pop();
-                        i++;
-                    }
+                    st.pop();
+                }
+                else if(sum>0)
+                {
+                    a=0;
                 }
                 else
                 {
-                   stk.push(currval);    
-                   i++;
+                    st.pop();
+                    a=0;
                 }
             }
+            if(a!=0)
+            {
+                st.push(a);
+            }
         }
-        vector<int>ans;
-        while(!stk.empty())
+        int n=st.size();
+        vector<int>ans(n);
+        for(int i=n-1;i>=0;i--)
         {
-            ans.push_back(stk.top());
-            stk.pop();
+            ans[i]=st.top();
+            st.pop();
         }
-        reverse(ans.begin(),ans.end());
         return ans;
     }
 };
