@@ -11,7 +11,7 @@
  */
 class BSTIterator {
 
-    private:stack<TreeNode*>st;
+    stack<TreeNode*>st;
     public:
     BSTIterator(TreeNode* root) {
         pushall(root);
@@ -27,7 +27,7 @@ class BSTIterator {
     bool hasNext() {
         return !st.empty();
     }
-    private: 
+   
     void pushall(TreeNode*root)
     {
         for(;root!=NULL;st.push(root),root=root->left);
