@@ -7,27 +7,24 @@ class Solution{
 		
 
 	public:
-	int maxSumIS(int arr[], int n)  
+	  int solve(int prev_index,int index,int nums[],vector<vector<int>>&dp,int n)
+    {
+        if(index==n) return 0;
+        if(dp[index][prev_index+1]!=-1)
+        {
+            return dp[index][prev_index+1];
+        }
+       int sum= solve(prev_index,index+1,nums,dp,n);//not pick
+        if(prev_index==-1 ||  nums[index]>nums[prev_index])
+        {
+          sum= max(sum,nums[index]+solve(index,index+1,nums,dp,n));
+        }
+        return dp[index][prev_index+1]=sum;
+    }
+	int maxSumIS(int nums[], int n)  
 	{  
-	    int dp[n];
-	    for(int i=0;i<n;i++)
-	    {
-	        dp[i]=arr[i];
-	    }
-	    for(int i=0;i<n;i++)
-	    {
-	        for(int j=0;j<i;j++)
-	        {
-	            if(arr[j]<arr[i])
-	          dp[i]=  max(dp[i],dp[j]+arr[i]);
-	        }
-	    }
-	    int mx=INT_MIN;
-	     for(int i=0;i<n;i++)
-	    {
-	        mx=max(mx,dp[i]);
-	    }
-	    return mx;
+        vector<vector<int>>dp(n,vector<int>(n+1,-1));
+        return solve(-1,0,nums,dp,n);
 	}  
 };
 
