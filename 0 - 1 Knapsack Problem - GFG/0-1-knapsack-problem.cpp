@@ -7,36 +7,37 @@ using namespace std;
 class Solution
 {
     public:
-    int rec(int wt[],int val[],int W,int i,vector<vector<int>>&dp)
+    //Function to return max value that can be put in knapsack of capacity W.
+    int solve(int index,int W,int wt[],int val[],vector<vector<int>>&dp)
     {
-        if(i==0)
+        if(index==0)
         {
-            if(wt[i]<=W)
+            if(W>=wt[0])
             {
-                return val[i];
+                return val[0];
             }
             else
             {
-                return 0;
+            return 0;
             }
         }
-        if(dp[i][W]!=-1)
-        return dp[i][W];
-        //not pick
-        
-        int notPick=rec(wt,val,W,i-1,dp);
-        int pick=INT_MIN;
-        if(wt[i]<=W) //pick
+        if(dp[index][W]!=-1)
         {
-            pick=val[i]+rec(wt,val,W-wt[i],i-1,dp);
+            return dp[index][W];
         }
-        return dp[i][W]= max(pick,notPick);
+        
+        int notpick=solve(index-1,W,wt,val,dp);
+        int pick=INT_MIN;
+        if(W>=wt[index])
+        {
+         pick=val[index]+solve(index-1,W-wt[index],wt,val,dp);
+        }
+        return dp[index][W]=max(notpick,pick);
     }
-    //Function to return max value that can be put in knapsack of capacity W.
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-        vector<vector<int>>dp(n,vector<int>(W+1,-1));
-       return rec(wt,val,W,n-1,dp);
+       vector<vector<int>>dp(n,vector<int>(W+1,-1));
+       return solve(n-1,W,wt,val,dp);
     }
 };
 
