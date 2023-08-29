@@ -9,33 +9,31 @@ using namespace std;
 
 class Solution{
 public:
-    bool isPal(int i,int j,string &s)
+bool isPal(int i,int j,string &s)
+{
+    while(i<j)
     {
-        while(i<j)
-        {
         if(s[i]!=s[j]) return false;
         i++;
         j--;
-        }
-        return true;
     }
-    int solve(int i,int n,string &str,vector<int>&dp)
+    return true;
+}
+int solve(int i,int n,string &s,vector<int>&dp)
+{
+    int ans=INT_MAX;
+    if(i==n)return 0;
+    if(dp[i]!=-1)return dp[i];
+    for(int j=i;j<n;j++)
     {
-        if(i==n)
-        return 0;
-        if(dp[i]!=-1)
-        return dp[i];
-        int mn=INT_MAX;
-        for(int j=i;j<n;j++)
+        if(isPal(i,j,s))
         {
-            if(isPal(i,j,str))
-            {
-                int temp=1+solve(j+1,n,str,dp);
-                mn=min(mn,temp);
-            }
+            int count=1+solve(j+1,n,s,dp);
+            ans=min(ans,count);
         }
-        return dp[i]=mn;
     }
+    return dp[i]=ans;
+}
     int palindromicPartition(string str)
     {
         int n=str.size();
