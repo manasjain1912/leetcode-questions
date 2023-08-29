@@ -1,30 +1,22 @@
 class Solution {
 public:
-    int bestClosingTime(string customers) {
-        int left=0;
-        int right=0;
-        left=0;
-        for(auto ele:customers){
-            if(ele=='Y')
-                right++;
-        }
-        int index=0;
-        int penalty=right;
-        for(int i=0;i<customers.length();i++)
+    int bestClosingTime(string c) {
+        int n=c.size();
+        int count=0;
+        int ans=0;
+        int idx=-1;
+        for(int i=0;i<n;i++)
         {
-            if(customers[i]=='N')
+            if(c[i]=='Y')
+            count++;
+            else
+            count--;
+            if(count>ans)
             {
-                left++;
-            }
-            else if(customers[i]=='Y')
-            {
-                right--;
-            }
-            if(left+right < penalty){
-                penalty=left+right;
-                index=i+1;
+                ans=count;
+                idx=i;
             }
         }
-        return index;
+        return idx+1;
     }
 };
