@@ -15,23 +15,24 @@ public:
         }
         ListNode*a=headA;
         ListNode*b=headB;
+        
         while(a!=b)
         {
-            if(a!=NULL)
-            {
-                a=a->next;
-            }
-            else
+            if(a==NULL)
             {
                 a=headB;
             }
-             if(b!=NULL)
+            else
             {
-                b=b->next;
+                a=a->next;
+            }
+             if(b==NULL)
+            {
+                b=headA;
             }
             else
             {
-                b=headA;
+                b=b->next;
             }
         }
         return a;
