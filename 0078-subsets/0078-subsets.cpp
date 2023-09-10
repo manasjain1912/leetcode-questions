@@ -5,6 +5,7 @@ public:
         ans.push_back(ds);
         for(int i=index;i<nums.size();i++)
         {
+             if(i!=index && nums[i-1]==nums[i])continue;
             ds.push_back(nums[i]);
             solve(i+1,nums,ds,ans);
             ds.pop_back();
